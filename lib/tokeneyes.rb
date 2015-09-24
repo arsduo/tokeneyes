@@ -1,5 +1,5 @@
 require "tokeneyes/version"
+require "tokeneyes/word"
 
 module Tokeneyes
-  # Your code goes here...
 end
