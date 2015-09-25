@@ -16,5 +16,9 @@ module Tokeneyes
     def ends_sentence?
       @ends_sentence
     end
+
+    def to_s
+      @text
+    end
   end
 end

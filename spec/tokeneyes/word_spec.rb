@@ -28,5 +28,13 @@ module Tokeneyes
         expect(word.begins_sentence?).to be false
       end
     end
+
+    describe "#to_s" do
+      it "returns the word" do
+        word.begins_sentence = false
+        word.ends_sentence = true
+        expect(word.to_s).to eq(text)
+      end
+    end
   end
 end
