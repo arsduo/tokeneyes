@@ -1,9 +1,14 @@
 module Tokeneyes
-  class WordBoundarySurveyor
-    attr_reader :current_char, :previous_char
-    def initialize(previous, current)
+  # Given a word fragment and the next character in the stream, continue building the word until we
+  # hit a boundary.
+  class WordBuilder
+    # We track both the word so far and the previous character (which may be punctuation and not
+    # part of the word).
+    attr_reader :previous_char, :current_char, :word_so_far
+    def initialize(previous, current, word)
       @current_char = current.to_s
       @previous_char = previous.to_s
+      @word_so_far = word
     end
 
     # Definite word elements, those that can repeat as much as they want and always be words:
@@ -21,6 +26,8 @@ module Tokeneyes
     # Everything else represents a word boundary.
 
     def word_finished?
+      # if the word hasn't actually started, we always continue it until we find something
+      return false if word_so_far.length == 0
       word_did_indeed_terminate_previously? || !word_continues?
     end
 
