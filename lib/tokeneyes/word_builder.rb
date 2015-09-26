@@ -72,7 +72,8 @@ module Tokeneyes
     end
 
     def previous_character_was_possible_boundary?
-      previous_char.match(POSSIBLE_WORD_ELEMENTS)
+      # it's not a possible word boundary if the word hasn't yet started
+      previous_char.match(POSSIBLE_WORD_ELEMENTS) && word_so_far.length > 0
     end
 
     def current_char_is_possible_boundary?

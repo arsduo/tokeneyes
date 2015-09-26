@@ -77,12 +77,20 @@ module Tokeneyes
         expect(WordBuilder.new("#", "1", "abc").character_to_add_to_word).to eq("#1")
       end
 
+      it "returns the just the current character after a possible boundary if there isn't a word previously" do
+        expect(WordBuilder.new("#", "1", "").character_to_add_to_word).to eq("1")
+      end
+
       it "returns an empty string for two possible boundaries" do
         expect(WordBuilder.new("#", "-", "abc").character_to_add_to_word).to eq("")
       end
 
       it "returns an empty string for .." do
         expect(WordBuilder.new(".", ".", "abc").character_to_add_to_word).to eq("")
+      end
+
+      it "returns .a when continuing past a possible boundary" do
+        expect(WordBuilder.new(".", "a", "abc").character_to_add_to_word).to eq(".a")
       end
 
       it "returns an empty string for a space" do
@@ -105,11 +113,11 @@ module Tokeneyes
         expect(WordBuilder.new("", "a", "").character_to_add_to_word).to eq("a")
       end
 
-      it "returns false if the first character is blank and followed by a possible boundary" do
+      it "returns nothing if the first character is blank and followed by a possible boundary" do
         expect(WordBuilder.new("", "-", "").character_to_add_to_word).to eq("")
       end
 
-      it "returns false if the first character is blank and followed by a definite boundary" do
+      it "returns nothing if the first character is blank and followed by a definite boundary" do
         expect(WordBuilder.new("", "!", "").character_to_add_to_word).to eq("")
       end
     end

@@ -1,4 +1,4 @@
-require "tokeneyes/word_boundary_surveyor"
+require "tokeneyes/word_builder"
 
 module Tokeneyes
   # The WordReader class will read a single word from a StringIO, advancing the IO stream until a
@@ -13,7 +13,7 @@ module Tokeneyes
 
     def read_word(previous_char = "", word = "")
       current_char = text_stream.readchar
-      transition_detector = WordBoundarySurveyor.new(previous_char, current_char)
+      transition_detector = WordBuilder.new(previous_char, current_char, word)
       word += transition_detector.character_to_add_to_word
 
       # if we detect a word boundary but don't actually have a word yet, keep going -- that is,
