@@ -7,6 +7,7 @@ module Tokeneyes
 
     def initialize(text)
       @text = text
+      @begins_sentence = @ends_sentence = false
     end
 
     def begins_sentence?
