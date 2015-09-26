@@ -2,8 +2,8 @@ module Tokeneyes
   class WordBoundarySurveyor
     attr_reader :current_char, :previous_char
     def initialize(previous, current)
-      @current_char = current
-      @previous_char = previous
+      @current_char = current.to_s
+      @previous_char = previous.to_s
     end
 
     # Definite word elements, those that can repeat as much as they want and always be words:
@@ -57,7 +57,7 @@ module Tokeneyes
     end
 
     def word_continues?
-      current_char_is_word_element? || current_char_might_be_a_word_element?
+      current_char_is_word_element? || current_char_is_possible_boundary?
     end
 
     def current_char_is_word_element?
@@ -68,8 +68,10 @@ module Tokeneyes
       previous_char.match(POSSIBLE_WORD_ELEMENTS)
     end
 
-    def current_char_might_be_a_word_element?
-      current_char.match(POSSIBLE_WORD_ELEMENTS)
+    def current_char_is_possible_boundary?
+      # If the previous character was also a boundary, this one can't be as well -- we've ended the
+      # word.
+      current_char.match(POSSIBLE_WORD_ELEMENTS) && !previous_character_was_possible_boundary?
     end
 
     def punctuation_candidate

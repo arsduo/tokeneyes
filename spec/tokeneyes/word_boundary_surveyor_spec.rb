@@ -65,6 +65,18 @@ module Tokeneyes
         expect(WordBoundarySurveyor.new("#", "1").character_to_add_to_word).to eq("#1")
       end
 
+      it "returns an empty string for two possible boundaries" do
+        expect(WordBoundarySurveyor.new("#", "-").character_to_add_to_word).to eq("")
+      end
+
+      it "returns an empty string for .." do
+        expect(WordBoundarySurveyor.new(".", ".").character_to_add_to_word).to eq("")
+      end
+
+      it "returns an empty string for a space" do
+        expect(WordBoundarySurveyor.new("1", " ").character_to_add_to_word).to eq("")
+      end
+
       it "returns an empty string for a possible word boundary" do
         expect(WordBoundarySurveyor.new("1", "#").character_to_add_to_word).to eq("")
       end
