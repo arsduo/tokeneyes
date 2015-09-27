@@ -191,6 +191,19 @@ module Tokeneyes
           end
         end
       end
+
+      context "with only junk afterward" do
+        let(:phrase) { "#{base_phrase} !??!!😺" }
+        let(:expected_phrase) { "" }
+        let(:sentence_ends) { true }
+        let(:expected_eof) { true }
+
+        before :each do
+          reader.read_word
+        end
+
+        it_should_behave_like :finds_the_word_properly
+      end
     end
   end
 end
