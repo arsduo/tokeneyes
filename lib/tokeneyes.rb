@@ -1,5 +1,5 @@
 require "tokeneyes/version"
+require 'tokeneyes/tokenizer'
 
 module Tokeneyes
-  # Your code goes here...
 end
