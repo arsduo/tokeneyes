@@ -1,6 +1,5 @@
 require "tokeneyes/version"
-require "tokeneyes/word"
-require 'tokeneyes/word_reader'
+require 'tokeneyes/tokenizer'
 
 module Tokeneyes
 end
