@@ -14,12 +14,13 @@ module Tokeneyes
     # Definite word elements, those that can repeat as much as they want and always be words:
     # alphanumeric characters (including European symbols). If anyone has expertise on non-European
     # languages, I would love to add support for other character groups.
-    WORD_ELEMENTS = /[\w\dÀ-ž]/
+    # We include @ and # to support Twitter mentions, hashtags, and email addresses.
+    WORD_ELEMENTS = /[\w\dÀ-ž\@\#]/
     # Defines a word boundary that also ends a unit of text.
     SENTENCE_BOUNDARY = /[\.;\?\!]/
     # Possible word elements, those that mark a word boundary unless they're followed by a word
     # element:
-    POSSIBLE_WORD_ELEMENTS = /[\.'\-\#]/
+    POSSIBLE_WORD_ELEMENTS = /[\.'\-]/
     # We don't track all possible punctuation, just some. (In particular, we don't track those that
     # come in pairs, like parentheses and brackets, etc.)
     MEANINGFUL_PUNCTUATION = /[\.,\-;\!\?]/

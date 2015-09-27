@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Tokeneyes
   RSpec.describe WordBuilder do
-    possible_dividers = ["#", ".", "'", "-"]
+    possible_dividers = [".", "'", "-"]
 
     describe "#word_finished?" do
       it "returns false if the word hasn't terminated" do
@@ -74,15 +74,23 @@ module Tokeneyes
       end
 
       it "returns the previous and current character if there is a word and the possible boundary wasn't the word end" do
-        expect(WordBuilder.new("#", "1", "abc").character_to_add_to_word).to eq("#1")
+        expect(WordBuilder.new("-", "1", "abc").character_to_add_to_word).to eq("-1")
       end
 
       it "returns the just the current character after a possible boundary if there isn't a word previously" do
-        expect(WordBuilder.new("#", "1", "").character_to_add_to_word).to eq("1")
+        expect(WordBuilder.new("-", "1", "").character_to_add_to_word).to eq("1")
+      end
+
+      it "treats @ like a word character" do
+        expect(WordBuilder.new("", "@", "").character_to_add_to_word).to eq("@")
+      end
+
+      it "treats # like a word character" do
+        expect(WordBuilder.new("", "#", "").character_to_add_to_word).to eq("#")
       end
 
       it "returns an empty string for two possible boundaries" do
-        expect(WordBuilder.new("#", "-", "abc").character_to_add_to_word).to eq("")
+        expect(WordBuilder.new("-", "'", "abc").character_to_add_to_word).to eq("")
       end
 
       it "returns an empty string for .." do
@@ -98,7 +106,7 @@ module Tokeneyes
       end
 
       it "returns an empty string for a possible word boundary" do
-        expect(WordBuilder.new("1", "#", "1").character_to_add_to_word).to eq("")
+        expect(WordBuilder.new("1", "'", "1").character_to_add_to_word).to eq("")
       end
 
       it "returns an empty string for a definite boundary" do
@@ -128,7 +136,7 @@ module Tokeneyes
       end
 
       it "returns nil if we're at a possible boundary" do
-        expect(WordBuilder.new("a", "#", "a").punctuation).to be_nil
+        expect(WordBuilder.new("a", "'", "a").punctuation).to be_nil
       end
 
       ["-", "."].each do |possible_divider|
