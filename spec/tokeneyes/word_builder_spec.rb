@@ -151,28 +151,28 @@ module Tokeneyes
     describe "#sentence_ended?" do
       ["!", "?", ";"].each do |definite_divider|
         it "returns true if the sentence ended on a #{definite_divider}" do
-          expect(WordBuilder.new("a", definite_divider, "a").sentence_ended?).to be_truthy
+          expect(WordBuilder.new("a", definite_divider, "a").sentence_ended?).to be true
         end
       end
 
       it "returns true if the sentence ended on a ." do
-        expect(WordBuilder.new(".", " ", "a").sentence_ended?).to be_truthy
+        expect(WordBuilder.new(".", " ", "a").sentence_ended?).to be true
       end
 
       it "returns false if the word hasn't started" do
-        expect(WordBuilder.new("", "!", "").sentence_ended?).to be_falsy
+        expect(WordBuilder.new("", "!", "").sentence_ended?).to be false
       end
 
       it "return false if the word may be continuing" do
-        expect(WordBuilder.new("a", ".", "a").sentence_ended?).to be_falsy
+        expect(WordBuilder.new("a", ".", "a").sentence_ended?).to be false
       end
 
       it "returns false if the word isn't over" do
-        expect(WordBuilder.new("a", "1", "a").sentence_ended?).to be_falsy
+        expect(WordBuilder.new("a", "1", "a").sentence_ended?).to be false
       end
 
       it "returns false if the word but not the sentence is over" do
-        expect(WordBuilder.new("a", ")", "a").sentence_ended?).to be_falsy
+        expect(WordBuilder.new("a", ")", "a").sentence_ended?).to be false
       end
     end
   end

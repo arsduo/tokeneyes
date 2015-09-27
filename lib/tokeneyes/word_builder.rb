@@ -53,7 +53,7 @@ module Tokeneyes
     end
 
     def sentence_ended?
-      punctuation && punctuation.match(SENTENCE_BOUNDARY)
+      !!(punctuation && punctuation.match(SENTENCE_BOUNDARY))
     end
 
     protected
