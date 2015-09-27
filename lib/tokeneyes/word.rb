@@ -19,7 +19,11 @@ module Tokeneyes
     end
 
     def to_s
-      @text
+      text
+    end
+
+    def length
+      text.length
     end
   end
 end

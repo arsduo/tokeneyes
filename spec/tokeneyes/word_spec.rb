@@ -36,5 +36,11 @@ module Tokeneyes
         expect(word.to_s).to eq(text)
       end
     end
+
+    describe "#length" do
+      it "returns the word's length" do
+        expect(word.length).to eq(text.length)
+      end
+    end
   end
 end
