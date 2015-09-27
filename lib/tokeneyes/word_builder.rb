@@ -12,10 +12,10 @@ module Tokeneyes
     end
 
     # Definite word elements, those that can repeat as much as they want and always be words:
-    # alphanumeric characters (including European symbols). If anyone has expertise on non-European
+    # alphanumeric characters (including European symbols, all the Unicode blocks). If anyone has expertise on non-European
     # languages, I would love to add support for other character groups.
     # We include @ and # to support Twitter mentions, hashtags, and email addresses.
-    WORD_ELEMENTS = /[\w\dÀ-ž\@\#]/
+    WORD_ELEMENTS = /[\w\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\@\#]/
     # Defines a word boundary that also ends a unit of text.
     SENTENCE_BOUNDARY = /[\.;\?\!]/
     # Possible word elements, those that mark a word boundary unless they're followed by a word
