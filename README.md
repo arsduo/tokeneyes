@@ -1,3 +1,7 @@
+[![Code Climate](https://codeclimate.com/github/arsduo/tokeneyes/badges/gpa.svg)](https://codeclimate.com/github/arsduo/tokeneyes)
+[![Test Coverage](https://codeclimate.com/github/arsduo/tokeneyes/badges/coverage.svg)](https://codeclimate.com/github/arsduo/tokeneyes/coverage)
+[![Build Status](https://travis-ci.org/arsduo/tokeneyes.svg)](https://travis-ci.org/arsduo/tokeneyes)
+
 # Tokeneyes
 
 A string tokenizer designed to capture words with associated punctuation and sentence flow
