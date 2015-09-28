@@ -12,18 +12,28 @@ module Tokeneyes
     end
 
     # Definite word elements, those that can repeat as much as they want and always be words:
-    # alphanumeric characters (including European symbols, all the Unicode blocks). If anyone has expertise on non-European
+    # alphanumeric characters (including some European symbols). If anyone has expertise on non-European
     # languages, I would love to add support for other character groups.
-    # We include @ and # to support Twitter mentions, hashtags, and email addresses.
-    WORD_ELEMENTS = /[\w\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\@\#]/
+    WORD_ELEMENTS = Set.new(
+      # Letters
+      ("A".."Z").to_a + ("a".."z").to_a +
+      # Numbers
+      ("0".."9").to_a +
+      # A subset of European characters
+      ("\u00C0".."\uD7FF").to_a + ("\u00D8".."\u00F6").to_a + ("\u00F8".."\u00FC").to_a +
+      # Hashtag, @mention, and email support -- this will need to be made more intelligent later
+      ["@", "#"]
+    )
+
     # Defines a word boundary that also ends a unit of text.
-    SENTENCE_BOUNDARY = /[\.;\?\!]/
+    SENTENCE_BOUNDARY = Set.new([".", ";", "?", "!"])
     # Possible word elements, those that mark a word boundary unless they're followed by a word
     # element:
-    POSSIBLE_WORD_ELEMENTS = /[\.'\-]/
+    POSSIBLE_WORD_ELEMENTS = Set.new([".", "'", "-"])
     # We don't track all possible punctuation, just some. (In particular, we don't track those that
     # come in pairs, like parentheses and brackets, etc.)
-    MEANINGFUL_PUNCTUATION = /[\.,\-;\!\?]/
+    # TODO add support for ellipses, interrobang, etc.
+    MEANINGFUL_PUNCTUATION = Set.new([".", ",", "-", ";", "!", "?"])
     # Everything else represents a word boundary.
 
     def word_finished?
@@ -50,11 +60,11 @@ module Tokeneyes
     # Which punctuation ended the word?
     def punctuation
       return nil unless word_finished?
-      punctuation_candidate if punctuation_candidate.match(MEANINGFUL_PUNCTUATION)
+      punctuation_candidate if MEANINGFUL_PUNCTUATION.include?(punctuation_candidate)
     end
 
     def sentence_ended?
-      !!(punctuation && punctuation.match(SENTENCE_BOUNDARY))
+      !!(punctuation && SENTENCE_BOUNDARY.include?(punctuation))
     end
 
     protected
@@ -69,18 +79,18 @@ module Tokeneyes
     end
 
     def current_char_is_word_element?
-      current_char.match(WORD_ELEMENTS)
+      WORD_ELEMENTS.include?(current_char)
     end
 
     def previous_character_was_possible_boundary?
       # it's not a possible word boundary if the word hasn't yet started
-      previous_char.match(POSSIBLE_WORD_ELEMENTS) && word_so_far.length > 0
+      POSSIBLE_WORD_ELEMENTS.include?(previous_char) && word_so_far.length > 0
     end
 
     def current_char_is_possible_boundary?
       # If the previous character was also a boundary, this one can't be as well -- we've ended the
       # word.
-      current_char.match(POSSIBLE_WORD_ELEMENTS) && !previous_character_was_possible_boundary?
+      POSSIBLE_WORD_ELEMENTS.include?(current_char) && !previous_character_was_possible_boundary?
     end
 
     def punctuation_candidate
