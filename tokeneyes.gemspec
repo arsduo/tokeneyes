@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Alex Koppel"]
   spec.email         = ["alex@alexkoppel.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{A simple string tokenizer designed to capture punctuation and sentence flow information.}
+  spec.description   = %q{A simple string tokenizer designed to capture punctuation and sentence flow information.}
+  spec.homepage      = "https://github.com/arsduo/tokeneyes"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
